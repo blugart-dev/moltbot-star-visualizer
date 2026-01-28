@@ -4,20 +4,24 @@ extends Control
 ## Provides play/pause button, speed selector dropdown, timeline slider,
 ## and date/count display. Connects to TimelineController for state management.
 
-## Background color for the timeline bar.
-const BACKGROUND_COLOR := Color(0.08, 0.08, 0.12, 0.85)
+## Background color for the timeline bar (darker for contrast on light sky).
+const BACKGROUND_COLOR := Color(0.12, 0.14, 0.18, 0.92)
 
-## Accent color for highlighted elements (lobster red).
-const ACCENT_COLOR := Color(0.85, 0.25, 0.15)
+## Accent color for highlighted elements (vibrant lobster red).
+const ACCENT_COLOR := Color(0.9, 0.2, 0.1)
 
 ## Text color for labels.
-const TEXT_COLOR := Color(0.92, 0.92, 0.95)
+const TEXT_COLOR := Color(1.0, 1.0, 1.0)
 
-@onready var _play_button: Button = $HBoxContainer/PlayButton
-@onready var _speed_selector: OptionButton = $HBoxContainer/SpeedSelector
+@onready var _play_button: Button = $HBoxContainer/ControlsGroup/PlayButton
+@onready var _speed_selector: OptionButton = $HBoxContainer/ControlsGroup/SpeedSelector
 @onready var _slider: HSlider = $HBoxContainer/HSlider
-@onready var _date_label: Label = $HBoxContainer/DateLabel
-@onready var _count_label: Label = $HBoxContainer/CountLabel
+@onready var _date_label: Label = $HBoxContainer/InfoGroup/DateLabel
+@onready var _star_icon: Label = $HBoxContainer/InfoGroup/StarIcon
+@onready var _count_label: Label = $HBoxContainer/InfoGroup/CountLabel
+@onready var _separator1: VSeparator = $HBoxContainer/Separator1
+@onready var _separator2: VSeparator = $HBoxContainer/Separator2
+@onready var _separator3: VSeparator = $HBoxContainer/InfoGroup/Separator3
 
 var _timeline_controller: Node
 var _coordinator: Node
@@ -134,19 +138,22 @@ func _apply_styling() -> void:
 	bg_style.corner_radius_top_right = 12
 	bg_style.corner_radius_bottom_left = 0
 	bg_style.corner_radius_bottom_right = 0
-	bg_style.content_margin_left = 16
-	bg_style.content_margin_right = 16
-	bg_style.content_margin_top = 12
-	bg_style.content_margin_bottom = 12
 	add_theme_stylebox_override("panel", bg_style)
 
 	# Style labels
-	_date_label.add_theme_color_override("font_color", TEXT_COLOR)
-	_count_label.add_theme_color_override("font_color", ACCENT_COLOR)
+	_date_label.add_theme_color_override("font_color", TEXT_COLOR.darkened(0.2))
+	_date_label.add_theme_font_size_override("font_size", 14)
 
-	# Make count label bold/larger
-	var count_font_size := 18
-	_count_label.add_theme_font_size_override("font_size", count_font_size)
+	# Star icon styling
+	_star_icon.add_theme_color_override("font_color", ACCENT_COLOR)
+	_star_icon.add_theme_font_size_override("font_size", 18)
+
+	# Count label - prominent accent color
+	_count_label.add_theme_color_override("font_color", ACCENT_COLOR)
+	_count_label.add_theme_font_size_override("font_size", 18)
+
+	# Style separators - subtle dividers
+	_style_separators()
 
 	# Style play button
 	_style_play_button()
@@ -154,20 +161,23 @@ func _apply_styling() -> void:
 	# Style speed selector
 	_style_speed_selector()
 
+	# Style slider
+	_style_slider()
+
 
 func _style_play_button() -> void:
 	var normal_style := StyleBoxFlat.new()
-	normal_style.bg_color = Color(0.15, 0.15, 0.2, 0.8)
+	normal_style.bg_color = Color(0.2, 0.22, 0.28, 0.9)
 	normal_style.corner_radius_top_left = 6
 	normal_style.corner_radius_top_right = 6
 	normal_style.corner_radius_bottom_left = 6
 	normal_style.corner_radius_bottom_right = 6
 
 	var hover_style := normal_style.duplicate()
-	hover_style.bg_color = Color(0.2, 0.2, 0.28, 0.9)
+	hover_style.bg_color = Color(0.28, 0.3, 0.38, 1.0)
 
 	var pressed_style := normal_style.duplicate()
-	pressed_style.bg_color = ACCENT_COLOR.darkened(0.2)
+	pressed_style.bg_color = ACCENT_COLOR.darkened(0.1)
 
 	_play_button.add_theme_stylebox_override("normal", normal_style)
 	_play_button.add_theme_stylebox_override("hover", hover_style)
@@ -176,10 +186,111 @@ func _style_play_button() -> void:
 	_play_button.add_theme_color_override("font_hover_color", TEXT_COLOR)
 	_play_button.add_theme_color_override("font_pressed_color", TEXT_COLOR)
 
+	# Center the text
+	_play_button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+
 
 func _style_speed_selector() -> void:
+	var normal_style := StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.2, 0.22, 0.28, 0.9)
+	normal_style.corner_radius_top_left = 6
+	normal_style.corner_radius_top_right = 6
+	normal_style.corner_radius_bottom_left = 6
+	normal_style.corner_radius_bottom_right = 6
+
+	var hover_style := normal_style.duplicate()
+	hover_style.bg_color = Color(0.28, 0.3, 0.38, 1.0)
+
+	_speed_selector.add_theme_stylebox_override("normal", normal_style)
+	_speed_selector.add_theme_stylebox_override("hover", hover_style)
 	_speed_selector.add_theme_color_override("font_color", TEXT_COLOR)
 	_speed_selector.add_theme_color_override("font_hover_color", TEXT_COLOR)
+	_speed_selector.add_theme_font_size_override("font_size", 13)
+
+	# Center the text
+	_speed_selector.alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+
+func _style_separators() -> void:
+	# Use StyleBoxFlat for more reliable rendering
+	var sep_style := StyleBoxFlat.new()
+	sep_style.bg_color = Color(1.0, 1.0, 1.0, 0.4)
+	sep_style.content_margin_left = 1
+	sep_style.content_margin_right = 1
+
+	_separator1.add_theme_stylebox_override("separator", sep_style)
+	_separator2.add_theme_stylebox_override("separator", sep_style)
+
+	# Set minimum width so they're actually visible
+	_separator1.custom_minimum_size.x = 2
+	_separator2.custom_minimum_size.x = 2
+
+	# Inner separator between date and star count
+	var inner_sep := StyleBoxFlat.new()
+	inner_sep.bg_color = Color(1.0, 1.0, 1.0, 0.25)
+	inner_sep.content_margin_left = 1
+	inner_sep.content_margin_right = 1
+	_separator3.add_theme_stylebox_override("separator", inner_sep)
+	_separator3.custom_minimum_size.x = 2
+
+
+func _style_slider() -> void:
+	# Slider track (background)
+	var grabber_area := StyleBoxFlat.new()
+	grabber_area.bg_color = Color(0.25, 0.27, 0.32, 0.8)
+	grabber_area.corner_radius_top_left = 4
+	grabber_area.corner_radius_top_right = 4
+	grabber_area.corner_radius_bottom_left = 4
+	grabber_area.corner_radius_bottom_right = 4
+	grabber_area.content_margin_top = 4
+	grabber_area.content_margin_bottom = 4
+
+	# Slider fill (progress)
+	var grabber_area_highlight := StyleBoxFlat.new()
+	grabber_area_highlight.bg_color = ACCENT_COLOR.darkened(0.2)
+	grabber_area_highlight.corner_radius_top_left = 4
+	grabber_area_highlight.corner_radius_top_right = 4
+	grabber_area_highlight.corner_radius_bottom_left = 4
+	grabber_area_highlight.corner_radius_bottom_right = 4
+	grabber_area_highlight.content_margin_top = 4
+	grabber_area_highlight.content_margin_bottom = 4
+
+	# Grabber (thumb)
+	var grabber := StyleBoxFlat.new()
+	grabber.bg_color = ACCENT_COLOR
+	grabber.corner_radius_top_left = 8
+	grabber.corner_radius_top_right = 8
+	grabber.corner_radius_bottom_left = 8
+	grabber.corner_radius_bottom_right = 8
+
+	var grabber_highlight := grabber.duplicate()
+	grabber_highlight.bg_color = ACCENT_COLOR.lightened(0.2)
+
+	_slider.add_theme_stylebox_override("slider", grabber_area)
+	_slider.add_theme_stylebox_override("grabber_area", grabber_area)
+	_slider.add_theme_stylebox_override("grabber_area_highlight", grabber_area_highlight)
+	_slider.add_theme_icon_override("grabber", _create_grabber_texture(ACCENT_COLOR))
+	_slider.add_theme_icon_override("grabber_highlight", _create_grabber_texture(ACCENT_COLOR.lightened(0.2)))
+
+
+func _create_grabber_texture(color: Color) -> ImageTexture:
+	# Create a circular grabber texture
+	var size := 16
+	var img := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	var center := Vector2(size / 2.0, size / 2.0)
+	var radius := size / 2.0 - 1
+
+	for x in range(size):
+		for y in range(size):
+			var dist := Vector2(x, y).distance_to(center)
+			if dist <= radius:
+				# Smooth edge with anti-aliasing
+				var alpha := clampf(radius - dist + 0.5, 0.0, 1.0)
+				img.set_pixel(x, y, Color(color.r, color.g, color.b, alpha))
+			else:
+				img.set_pixel(x, y, Color(0, 0, 0, 0))
+
+	return ImageTexture.create_from_image(img)
 
 
 func _update_date_display(date: String) -> void:

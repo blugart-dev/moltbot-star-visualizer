@@ -97,29 +97,33 @@ func _update_lobster_count(count: int) -> void:
 	if not lobster_manager:
 		return
 
-	var old_count: int = lobster_manager.get_instance_count()
 	lobster_manager.set_instance_count(count)
 
-	# Only recalculate positions for new instances
-	if count > old_count:
-		_position_new_instances(old_count, count)
+	# Recalculate all positions since sphere size changes with count
+	if count > 0:
+		_position_all_instances(count)
 
 	_current_count = count
 
 
-func _position_new_instances(start_index: int, end_count: int) -> void:
-	# Calculate positions for new instances using PositionCalculator
-	var transforms: Array[Transform3D] = PositionCalculator.calculate_positions(end_count)
+func _position_all_instances(count: int) -> void:
+	# Calculate all positions using PositionCalculator
+	var transforms: Array[Transform3D] = PositionCalculator.calculate_positions(count)
 
-	# Apply transforms for new instances
-	for i in range(start_index, end_count):
+	# Use seeded RNG for deterministic custom data
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 54321
+
+	# Apply transforms and custom data for all instances
+	for i in range(count):
 		lobster_manager.set_instance_transform(i, transforms[i])
-		# Set random custom data for shader variation
+
+		# Set custom data (seeded RNG ensures same data for same index)
 		var custom_data := Color(
-			randf(),  # Animation phase
-			0.8 + randf() * 0.2,  # R tint
-			0.2 + randf() * 0.2,  # G tint
-			0.1 + randf() * 0.1   # B tint
+			0.9 + rng.randf() * 0.2,  # R tint
+			0.9 + rng.randf() * 0.2,  # G tint
+			0.9 + rng.randf() * 0.2,  # B tint
+			rng.randf()  # Animation phase (alpha channel)
 		)
 		lobster_manager.set_instance_custom_data(i, custom_data)
 

@@ -42,30 +42,34 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for implementation details.
 
 ### Lobster Models
 
-- Low-poly 3D lobster (< 500 triangles)
-- Matches moltbot branding colors
-- Per-instance variation via shader (color tint, animation phase)
-- Simple idle animation (gentle bob/sway)
+- [x] Low-poly 3D lobster (~340 triangles, procedural)
+- [ ] Matches moltbot branding colors (lobster red-orange)
+- [ ] Per-instance variation via shader (color tint, animation phase)
+- [x] Simple idle animation (bob + sway via shader)
 
 ### Scene Composition
 
-- Dark background (space or deep ocean aesthetic)
-- Lobsters swarm in 3D space around a central point
-- Camera can orbit and zoom
-- Timeline bar at bottom
-- Star counter in corner
+- [x] Deep ocean background (blue gradient sky with fog)
+- [x] Glowing bioluminescent core at center
+- [x] Lobsters swarm in 3D space (Fibonacci sphere distribution)
+- [x] Camera orbits and auto-zooms with swarm
+- [x] Timeline bar at bottom (dark theme)
+- [x] Star counter (lobster-red accent)
+- [x] Atmospheric lighting (fog, glow, HDR)
 
 ### Milestones
 
-Special visual effects at key moments:
+Subtle celebration effects at key star counts (no playback interruption):
 
 | Stars | Effect |
 |-------|--------|
-| 1 | First lobster appears with fanfare |
-| 1,000 | Color pulse, brief pause |
-| 10,000 | Camera zoom out, wave effect |
-| 50,000 | Major celebration effect |
-| Current | Confetti or similar |
+| 1 | First lobster appears, small particle burst |
+| 1,000 | Medium particle burst, milestone sound |
+| 10,000 | Large particle burst, milestone sound |
+| 50,000 | Epic particle burst, special sound |
+| Final | Celebration particles, completion sound |
+
+Camera auto-zooms continuously to keep swarm visible - no jarring zoom effects.
 
 ## Milestones
 
@@ -94,24 +98,41 @@ Special visual effects at key moments:
 - [x] Timeline bar with scrubbing
 - [x] Date and count display
 
-### M5: Polish
+### M5: Core Polish (DONE)
 - [x] Real lobster model (procedural ~340 triangles)
-- [x] Milestone effects (pause, camera zoom, particles - UX needs refinement)
-- [~] Sound effects (AudioManager ready, audio files pending)
-- [x] UI polish (dark theme, lobster-red accents)
+- [x] Milestone detection system
+- [x] Auto-zoom camera (smooth, follows swarm growth)
+- [x] Basic milestone particles
+- [x] UI dark theme foundation
 
-### M6: Release
-- [ ] Web export working
+### M6: Visual Quality
+- [x] Skybox (deep ocean theme with fog)
+- [x] Lobster idle animation (bob + sway via shader)
+- [x] Better lighting and atmosphere (fog, glow, blue tones)
+- [x] Glowing bioluminescent core at center
+- [x] Particle polish (cyan bioluminescent colors)
+- [ ] Milestone visual feedback (count popup - optional)
+
+### M7: UI & Audio
+- [ ] Timeline bar refinement (tick marks, milestone indicators)
+- [ ] Stats overlay (total stars, current date prominent)
+- [ ] Loading/intro screen
+- [ ] Sound effects (ambient + milestone chimes)
+- [ ] Help/controls overlay (optional)
+
+### M8: Release
+- [ ] Web export testing (30+ FPS at 78K)
 - [ ] GitHub Pages deployment
 - [ ] README with screenshots/GIF
-- [ ] Announce
+- [ ] Social announcement
 
 ## Open Questions
 
-- [x] Exact lobster visual style (realistic vs stylized?) → Procedural low-poly (~340 triangles)
-- [x] Sound? Music? Or silent? → Full audio (ambient loop + milestone sounds)
-- [ ] Any interactivity beyond timeline? (click lobster for star info?)
-- [ ] GitHub Pages or itch.io for hosting?
+- [x] Lobster style → Procedural low-poly (~340 triangles)
+- [x] Camera behavior → Continuous auto-zoom (no jarring milestone zoom)
+- [x] Skybox theme → Deep ocean with bioluminescent core
+- [ ] Audio style: Ambient electronic or ocean sounds?
+- [ ] Hosting: GitHub Pages or itch.io?
 
 ## Resources
 

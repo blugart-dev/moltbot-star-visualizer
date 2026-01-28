@@ -8,31 +8,23 @@
 [ext_resource type="Script" uid="uid://djikv2ggi8ft1" path="res://scripts/core/timeline_controller.gd" id="6_timeline"]
 [ext_resource type="Script" uid="uid://5ycb6u58jgic" path="res://scripts/core/milestone_manager.gd" id="7_milestone"]
 [ext_resource type="Script" uid="uid://dwwckciulrjyx" path="res://scripts/audio/audio_manager.gd" id="8_audio"]
-[ext_resource type="PackedScene" path="res://scenes/effects/milestone_particles.tscn" id="9_particles"]
 [ext_resource type="Script" uid="uid://c1e334jpnmlpf" path="res://scripts/main.gd" id="10_main"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dark"]
-sky_top_color = Color(0.02, 0.02, 0.05, 1)
-sky_horizon_color = Color(0.05, 0.05, 0.1, 1)
-ground_bottom_color = Color(0.01, 0.01, 0.02, 1)
-ground_horizon_color = Color(0.05, 0.05, 0.1, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ocean"]
+sky_top_color = Color(0.4, 0.7, 0.95, 1)
+sky_horizon_color = Color(0.7, 0.85, 1.0, 1)
+ground_bottom_color = Color(0.5, 0.75, 0.9, 1)
+ground_horizon_color = Color(0.7, 0.85, 1.0, 1)
 
-[sub_resource type="Sky" id="Sky_dark"]
-sky_material = SubResource("ProceduralSkyMaterial_dark")
+[sub_resource type="Sky" id="Sky_ocean"]
+sky_material = SubResource("ProceduralSkyMaterial_ocean")
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 2
-sky = SubResource("Sky_dark")
-ambient_light_source = 2
-ambient_light_color = Color(0.25, 0.25, 0.35, 1)
-ambient_light_energy = 0.6
-tonemap_mode = 2
-tonemap_white = 1.2
-glow_enabled = true
-glow_intensity = 0.4
-glow_strength = 0.8
-glow_bloom = 0.1
-glow_blend_mode = 1
+sky = SubResource("Sky_ocean")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 1.0
 
 [node name="Main" type="Node" unique_id=1663647622]
 script = ExtResource("10_main")
@@ -47,15 +39,12 @@ environment = SubResource("Environment_main")
 
 [node name="DirectionalLight" type="DirectionalLight3D" parent="World" unique_id=1257970655]
 transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 10, 0)
-light_color = Color(0.95, 0.95, 1, 1)
-light_energy = 1.2
-shadow_enabled = true
+light_color = Color(1, 1, 1, 1)
+light_energy = 0.5
+shadow_enabled = false
 
 [node name="Camera3D" type="Camera3D" parent="World" unique_id=2135459035]
 script = ExtResource("1_orbit")
-
-[node name="MilestoneParticles" parent="World" unique_id=1214713541 instance=ExtResource("9_particles")]
-emitting = false
 
 [node name="TimelineController" type="Node" parent="." unique_id=213731902]
 script = ExtResource("6_timeline")
@@ -74,40 +63,36 @@ script = ExtResource("8_audio")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1978227726]
 
-[node name="TimelineBar" type="Control" parent="UI" unique_id=1682656403]
-layout_mode = 3
+[node name="TimelineBar" type="PanelContainer" parent="UI" unique_id=1682656403]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -60.0
+offset_top = -64.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
 script = ExtResource("5_debug")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/TimelineBar" unique_id=1200615203]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
+layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="UI/TimelineBar/HBoxContainer" unique_id=1904504439]
+[node name="ControlsGroup" type="HBoxContainer" parent="UI/TimelineBar/HBoxContainer" unique_id=1367084458]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PlayButton" type="Button" parent="UI/TimelineBar/HBoxContainer/ControlsGroup" unique_id=1904504439]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
+size_flags_vertical = 4
 text = ">"
-flat = true
 
-[node name="SpeedSelector" type="OptionButton" parent="UI/TimelineBar/HBoxContainer" unique_id=1440851690]
-custom_minimum_size = Vector2(70, 0)
+[node name="SpeedSelector" type="OptionButton" parent="UI/TimelineBar/HBoxContainer/ControlsGroup" unique_id=1440851690]
+custom_minimum_size = Vector2(70, 40)
 layout_mode = 2
+size_flags_vertical = 4
 selected = 1
 item_count = 5
 popup/item_0/text = "0.5x"
@@ -121,38 +106,46 @@ popup/item_3/id = 3
 popup/item_4/text = "10x"
 popup/item_4/id = 4
 
+[node name="Separator1" type="VSeparator" parent="UI/TimelineBar/HBoxContainer" unique_id=1589267168]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="HSlider" type="HSlider" parent="UI/TimelineBar/HBoxContainer" unique_id=1637945714]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
 
-[node name="DateLabel" type="Label" parent="UI/TimelineBar/HBoxContainer" unique_id=200810905]
-custom_minimum_size = Vector2(100, 0)
+[node name="Separator2" type="VSeparator" parent="UI/TimelineBar/HBoxContainer" unique_id=2124801838]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InfoGroup" type="HBoxContainer" parent="UI/TimelineBar/HBoxContainer" unique_id=1420070626]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="DateLabel" type="Label" parent="UI/TimelineBar/HBoxContainer/InfoGroup" unique_id=200810905]
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Loading..."
-horizontal_alignment = 1
+horizontal_alignment = 2
+vertical_alignment = 1
 
-[node name="CountLabel" type="Label" parent="UI/TimelineBar/HBoxContainer" unique_id=413998010]
-custom_minimum_size = Vector2(80, 0)
+[node name="Separator3" type="VSeparator" parent="UI/TimelineBar/HBoxContainer/InfoGroup" unique_id=602880270]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StarIcon" type="Label" parent="UI/TimelineBar/HBoxContainer/InfoGroup" unique_id=992555472]
+layout_mode = 2
+text = "★"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CountLabel" type="Label" parent="UI/TimelineBar/HBoxContainer/InfoGroup" unique_id=413998010]
+custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 text = "0"
-horizontal_alignment = 2
-
-[node name="StatsDisplay" type="Control" parent="UI" unique_id=335600474]
-layout_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -200.0
-offset_bottom = 100.0
-grow_horizontal = 0
-mouse_filter = 2
-
-[node name="Controls" type="Control" parent="UI" unique_id=1903388850]
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -100.0
-offset_right = 200.0
-grow_vertical = 0
-mouse_filter = 2
+vertical_alignment = 1

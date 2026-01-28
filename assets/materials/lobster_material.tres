@@ -4,8 +4,8 @@
 
 [resource]
 shader = ExtResource("1_shader")
-shader_parameter/base_color = Vector3(0.8, 0.25, 0.15)
-shader_parameter/idle_amplitude = 0.05
-shader_parameter/idle_speed = 1.0
-shader_parameter/roughness = 0.7
-shader_parameter/metallic = 0.1
+shader_parameter/base_color = Vector3(0.85, 0.28, 0.12)
+shader_parameter/segment_color = Vector3(0.55, 0.18, 0.08)
+shader_parameter/idle_amplitude = 0.08
+shader_parameter/idle_speed = 0.8
+shader_parameter/sway_amplitude = 0.1
