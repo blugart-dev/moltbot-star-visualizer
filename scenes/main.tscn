@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cweuunafwq03r" path="res://scripts/core/orbit_camera.gd" id="1_orbit"]
 [ext_resource type="Script" uid="uid://16k4vrlriw5k" path="res://scripts/core/lobster_manager.gd" id="2_lobster"]
-[ext_resource type="Script" path="res://scripts/core/data_provider.gd" id="3_data"]
-[ext_resource type="Script" path="res://scripts/core/visualization_coordinator.gd" id="4_coord"]
-[ext_resource type="Script" path="res://scripts/ui/debug_timeline.gd" id="5_debug"]
+[ext_resource type="Script" uid="uid://4pqfg7akdruk" path="res://scripts/core/data_provider.gd" id="3_data"]
+[ext_resource type="Script" uid="uid://bwbgkyhslxuif" path="res://scripts/core/visualization_coordinator.gd" id="4_coord"]
+[ext_resource type="Script" uid="uid://cxmovel4u6iw6" path="res://scripts/ui/debug_timeline.gd" id="5_debug"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 
@@ -49,7 +49,7 @@ script = ExtResource("1_orbit")
 [node name="DataProvider" type="Node" parent="." unique_id=519236001]
 script = ExtResource("3_data")
 
-[node name="VisualizationCoordinator" type="Node" parent="."]
+[node name="VisualizationCoordinator" type="Node" parent="." unique_id=1491519097]
 script = ExtResource("4_coord")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1978227726]
@@ -66,17 +66,16 @@ grow_vertical = 0
 mouse_filter = 1
 script = ExtResource("5_debug")
 
-[node name="Label" type="Label" parent="UI/TimelineBar"]
+[node name="Label" type="Label" parent="UI/TimelineBar" unique_id=399471530]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 24.0
 grow_horizontal = 2
-mouse_filter = 2
 text = "Loading..."
 horizontal_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="UI/TimelineBar"]
+[node name="HSlider" type="HSlider" parent="UI/TimelineBar" unique_id=1637945714]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,7 +86,6 @@ offset_right = -20.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 2
 
 [node name="StatsDisplay" type="Control" parent="UI" unique_id=335600474]
 layout_mode = 3
@@ -97,6 +95,7 @@ anchor_right = 1.0
 offset_left = -200.0
 offset_bottom = 100.0
 grow_horizontal = 0
+mouse_filter = 2
 
 [node name="Controls" type="Control" parent="UI" unique_id=1903388850]
 layout_mode = 3
@@ -106,3 +105,4 @@ anchor_bottom = 1.0
 offset_top = -100.0
 offset_right = 200.0
 grow_vertical = 0
+mouse_filter = 2
