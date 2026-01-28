@@ -81,3 +81,19 @@ func test_batch_transforms() -> void:
 	for i in range(5):
 		var result: Transform3D = _manager.get_instance_transform(3 + i)
 		assert_eq(result.origin.x, float(i), "Batch transform %d should be set" % i)
+
+
+func test_set_instance_custom_data() -> void:
+	_manager.set_instance_count(5)
+	# Custom data: RGB = color tint, A = animation phase
+	var custom_data := Color(1.1, 0.9, 1.0, 0.5)
+	_manager.set_instance_custom_data(2, custom_data)
+	# No getter for custom data, so just verify it doesn't crash
+	pass_test("Should set custom data without error")
+
+
+func test_set_instance_custom_data_out_of_range() -> void:
+	_manager.set_instance_count(5)
+	# Should warn but not crash
+	_manager.set_instance_custom_data(10, Color.WHITE)
+	pass_test("Should handle out of range gracefully")
