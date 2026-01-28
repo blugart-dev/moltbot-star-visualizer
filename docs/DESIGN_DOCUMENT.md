@@ -73,32 +73,32 @@ Special visual effects at key moments:
 - [x] Project setup (Godot 4.6, GL Compatibility)
 - [x] Documentation structure
 - [x] Git workflow configured
-- [ ] Basic scene with camera controls
-- [ ] Placeholder cube as "lobster"
+- [x] Basic scene with camera controls
+- [x] Placeholder cube as "lobster"
 
 ### M2: Rendering Pipeline
-- [ ] MultiMeshInstance3D setup
-- [ ] 10,000 instances rendering at 60 FPS
-- [ ] Per-instance shader variation working
-- [ ] Basic positioning algorithm (sphere packing or similar)
+- [x] MultiMeshInstance3D setup
+- [x] 10,000 instances rendering at 60 FPS
+- [x] Per-instance shader variation working
+- [x] Basic positioning algorithm (sphere packing or similar)
 
 ### M3: Data Integration
-- [ ] Python fetch script for star history
-- [ ] star_history.json with real data
-- [ ] DataProvider loading and parsing
-- [ ] Timeline scrubbing updates instance count
+- [x] Python fetch script for star history
+- [x] star_history.json with real data
+- [x] DataProvider loading and parsing
+- [x] Timeline scrubbing updates instance count
 
 ### M4: Timeline & Playback
-- [ ] Play/pause controls
-- [ ] Speed controls (0.5x, 1x, 2x, 5x, 10x)
-- [ ] Timeline bar with scrubbing
-- [ ] Date and count display
+- [x] Play/pause controls
+- [x] Speed controls (0.5x, 1x, 2x, 5x, 10x)
+- [x] Timeline bar with scrubbing
+- [x] Date and count display
 
 ### M5: Polish
-- [ ] Real lobster model
-- [ ] Milestone effects
-- [ ] Sound effects (optional)
-- [ ] UI polish
+- [x] Real lobster model (procedural ~340 triangles)
+- [x] Milestone effects (pause, camera zoom, particles - UX needs refinement)
+- [~] Sound effects (AudioManager ready, audio files pending)
+- [x] UI polish (dark theme, lobster-red accents)
 
 ### M6: Release
 - [ ] Web export working
@@ -108,8 +108,8 @@ Special visual effects at key moments:
 
 ## Open Questions
 
-- [ ] Exact lobster visual style (realistic vs stylized?)
-- [ ] Sound? Music? Or silent?
+- [x] Exact lobster visual style (realistic vs stylized?) → Procedural low-poly (~340 triangles)
+- [x] Sound? Music? Or silent? → Full audio (ambient loop + milestone sounds)
 - [ ] Any interactivity beyond timeline? (click lobster for star info?)
 - [ ] GitHub Pages or itch.io for hosting?
 

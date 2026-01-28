@@ -10,10 +10,10 @@ extends RefCounted
 const GOLDEN_ANGLE: float = PI * (3.0 - sqrt(5.0))
 
 ## Base radius for the first layer of lobsters.
-const BASE_RADIUS: float = 5.0
+const BASE_RADIUS: float = 3.0
 
 ## Spacing multiplier between layers.
-const LAYER_SPACING: float = 1.5
+const LAYER_SPACING: float = 1.0
 
 ## Random seed for deterministic rotations.
 const ROTATION_SEED: int = 12345
@@ -23,7 +23,7 @@ const MAX_ROTATION_OFFSET: float = PI * 0.25
 
 ## Number of instances per unit of sphere surface area.
 ## Controls density - higher means more tightly packed.
-const DENSITY_FACTOR: float = 0.15
+const DENSITY_FACTOR: float = 0.3
 
 
 ## Calculates transforms for the specified number of instances.
