@@ -1,10 +1,12 @@
 extends Camera3D
-## Orbit camera with mouse controls for viewing the lobster swarm.
+## Orbit camera with mouse and touch controls for viewing the lobster swarm.
 ##
-## Left-click drag to orbit around the origin. Scroll to zoom in/out.
+## Mouse: Left-drag to orbit, scroll to zoom.
+## Touch: Single-finger drag to orbit, pinch to zoom.
 
 @export var orbit_speed: float = 0.005
 @export var zoom_speed: float = 2.0
+@export var pinch_zoom_speed: float = 0.01
 @export var min_distance: float = 5.0
 @export var max_distance: float = 100.0
 @export var min_elevation: float = -80.0
@@ -14,6 +16,9 @@ var _distance: float = 20.0
 var _azimuth: float = 0.0
 var _elevation: float = 30.0
 var _dragging: bool = false
+
+var _touch_points: Dictionary = {}
+var _last_pinch_distance: float = 0.0
 
 
 func _ready() -> void:
@@ -25,6 +30,10 @@ func _input(event: InputEvent) -> void:
 		_handle_mouse_button(event)
 	elif event is InputEventMouseMotion:
 		_handle_mouse_motion(event)
+	elif event is InputEventScreenTouch:
+		_handle_screen_touch(event)
+	elif event is InputEventScreenDrag:
+		_handle_screen_drag(event)
 
 
 func _handle_mouse_button(event: InputEventMouseButton) -> void:
@@ -45,6 +54,36 @@ func _handle_mouse_motion(event: InputEventMouseMotion) -> void:
 	_elevation = clampf(_elevation, min_elevation, max_elevation)
 
 	_update_camera_position()
+
+
+func _handle_screen_touch(event: InputEventScreenTouch) -> void:
+	if event.pressed:
+		_touch_points[event.index] = event.position
+	else:
+		_touch_points.erase(event.index)
+		_last_pinch_distance = 0.0
+
+
+func _handle_screen_drag(event: InputEventScreenDrag) -> void:
+	_touch_points[event.index] = event.position
+
+	if _touch_points.size() == 1:
+		_azimuth -= event.relative.x * orbit_speed
+		_elevation += event.relative.y * orbit_speed * 100.0
+		_elevation = clampf(_elevation, min_elevation, max_elevation)
+		_update_camera_position()
+
+	elif _touch_points.size() == 2:
+		var points := _touch_points.values()
+		var current_distance := (points[0] as Vector2).distance_to(points[1] as Vector2)
+
+		if _last_pinch_distance > 0.0:
+			var delta := _last_pinch_distance - current_distance
+			_distance += delta * pinch_zoom_speed
+			_distance = clampf(_distance, min_distance, max_distance)
+			_update_camera_position()
+
+		_last_pinch_distance = current_distance
 
 
 func _zoom(direction: float) -> void:
