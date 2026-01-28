@@ -27,7 +27,7 @@ Watch the growth of moltbot's stars over time, visualized as 3D lobsters swarmin
 ### Steps
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/moltbot-star-tracker.git
+git clone https://github.com/blugart-dev/moltbot-star-tracker.git
 cd moltbot-star-tracker
 ```
 
