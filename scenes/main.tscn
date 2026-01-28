@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://4pqfg7akdruk" path="res://scripts/core/data_provider.gd" id="3_data"]
 [ext_resource type="Script" uid="uid://bwbgkyhslxuif" path="res://scripts/core/visualization_coordinator.gd" id="4_coord"]
 [ext_resource type="Script" uid="uid://cxmovel4u6iw6" path="res://scripts/ui/debug_timeline.gd" id="5_debug"]
+[ext_resource type="Script" path="res://scripts/core/timeline_controller.gd" id="6_timeline"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 
@@ -45,6 +46,7 @@ shadow_enabled = true
 script = ExtResource("1_orbit")
 
 [node name="TimelineController" type="Node" parent="." unique_id=213731902]
+script = ExtResource("6_timeline")
 
 [node name="DataProvider" type="Node" parent="." unique_id=519236001]
 script = ExtResource("3_data")
@@ -60,32 +62,61 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
+offset_top = -60.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
 script = ExtResource("5_debug")
 
-[node name="Label" type="Label" parent="UI/TimelineBar" unique_id=399471530]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 24.0
-grow_horizontal = 2
-text = "Loading..."
-horizontal_alignment = 1
-
-[node name="HSlider" type="HSlider" parent="UI/TimelineBar" unique_id=1637945714]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/TimelineBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 30.0
-offset_right = -20.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="PlayButton" type="Button" parent="UI/TimelineBar/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = ">"
+flat = true
+
+[node name="SpeedSelector" type="OptionButton" parent="UI/TimelineBar/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+selected = 1
+item_count = 5
+popup/item_0/text = "0.5x"
+popup/item_1/text = "1x"
+popup/item_1/id = 1
+popup/item_2/text = "2x"
+popup/item_2/id = 2
+popup/item_3/text = "5x"
+popup/item_3/id = 3
+popup/item_4/text = "10x"
+popup/item_4/id = 4
+
+[node name="HSlider" type="HSlider" parent="UI/TimelineBar/HBoxContainer" unique_id=1637945714]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DateLabel" type="Label" parent="UI/TimelineBar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Loading..."
+horizontal_alignment = 1
+
+[node name="CountLabel" type="Label" parent="UI/TimelineBar/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
 
 [node name="StatsDisplay" type="Control" parent="UI" unique_id=335600474]
 layout_mode = 3
