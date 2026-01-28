@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxq5j2m8k6lpv"]
+[gd_scene load_steps=4 format=3 uid="uid://bxq5j2m8k6lpv"]
+
+[ext_resource type="Script" path="res://scripts/core/orbit_camera.gd" id="1_orbit"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dark"]
 sky_top_color = Color(0.02, 0.02, 0.05, 1)
@@ -32,7 +34,7 @@ light_energy = 0.8
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 10, 20)
+script = ExtResource("1_orbit")
 
 [node name="TimelineController" type="Node" parent="."]
 
