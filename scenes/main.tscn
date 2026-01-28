@@ -63,6 +63,7 @@ anchor_bottom = 1.0
 offset_top = -80.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 0
 script = ExtResource("5_debug")
 
 [node name="Label" type="Label" parent="UI/TimelineBar"]
@@ -76,16 +77,16 @@ horizontal_alignment = 1
 
 [node name="HSlider" type="HSlider" parent="UI/TimelineBar"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
+anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = 4.0
+offset_top = 30.0
 offset_right = -20.0
-offset_bottom = 24.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 
 [node name="StatsDisplay" type="Control" parent="UI" unique_id=335600474]
 layout_mode = 3

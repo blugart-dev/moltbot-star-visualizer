@@ -26,6 +26,11 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	# Don't process input if mouse is over GUI
+	if _is_mouse_over_gui():
+		_dragging = false
+		return
+
 	if event is InputEventMouseButton:
 		_handle_mouse_button(event)
 	elif event is InputEventMouseMotion:
@@ -34,6 +39,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_screen_touch(event)
 	elif event is InputEventScreenDrag:
 		_handle_screen_drag(event)
+
+
+func _is_mouse_over_gui() -> bool:
+	var viewport := get_viewport()
+	if viewport:
+		return viewport.gui_get_hovered_control() != null
+	return false
 
 
 func _handle_mouse_button(event: InputEventMouseButton) -> void:
