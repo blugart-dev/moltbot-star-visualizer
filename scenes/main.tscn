@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bxq5j2m8k6lpv"]
+[gd_scene format=3 uid="uid://bxq5j2m8k6lpv"]
 
-[ext_resource type="Script" path="res://scripts/core/orbit_camera.gd" id="1_orbit"]
+[ext_resource type="Script" uid="uid://cweuunafwq03r" path="res://scripts/core/orbit_camera.gd" id="1_orbit"]
+[ext_resource type="Script" uid="uid://16k4vrlriw5k" path="res://scripts/core/lobster_manager.gd" id="2_lobster"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wfyh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dark"]
 sky_top_color = Color(0.02, 0.02, 0.05, 1)
@@ -18,41 +21,33 @@ ambient_light_source = 2
 ambient_light_color = Color(0.15, 0.15, 0.2, 1)
 ambient_light_energy = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_placeholder"]
-albedo_color = Color(0.8, 0.3, 0.2, 1)
+[node name="Main" type="Node" unique_id=1663647622]
 
-[sub_resource type="BoxMesh" id="BoxMesh_placeholder"]
-material = SubResource("StandardMaterial3D_placeholder")
-size = Vector3(2, 2, 2)
+[node name="World" type="Node3D" parent="." unique_id=368133542]
 
-[node name="Main" type="Node"]
+[node name="LobsterManager" type="Node3D" parent="World" unique_id=2001115620]
+script = ExtResource("2_lobster")
+lobster_mesh = SubResource("BoxMesh_0wfyh")
 
-[node name="World" type="Node3D" parent="."]
-
-[node name="LobsterManager" type="Node3D" parent="World"]
-
-[node name="PlaceholderCube" type="MeshInstance3D" parent="World/LobsterManager"]
-mesh = SubResource("BoxMesh_placeholder")
-
-[node name="Environment" type="WorldEnvironment" parent="World"]
+[node name="Environment" type="WorldEnvironment" parent="World" unique_id=609216498]
 environment = SubResource("Environment_main")
 
-[node name="DirectionalLight" type="DirectionalLight3D" parent="World"]
+[node name="DirectionalLight" type="DirectionalLight3D" parent="World" unique_id=1257970655]
 transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 10, 0)
 light_color = Color(0.9, 0.9, 1, 1)
 light_energy = 0.8
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="World"]
+[node name="Camera3D" type="Camera3D" parent="World" unique_id=2135459035]
 script = ExtResource("1_orbit")
 
-[node name="TimelineController" type="Node" parent="."]
+[node name="TimelineController" type="Node" parent="." unique_id=213731902]
 
-[node name="DataProvider" type="Node" parent="."]
+[node name="DataProvider" type="Node" parent="." unique_id=519236001]
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1978227726]
 
-[node name="TimelineBar" type="Control" parent="UI"]
+[node name="TimelineBar" type="Control" parent="UI" unique_id=1682656403]
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -62,7 +57,7 @@ offset_top = -60.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="StatsDisplay" type="Control" parent="UI"]
+[node name="StatsDisplay" type="Control" parent="UI" unique_id=335600474]
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -71,7 +66,7 @@ offset_left = -200.0
 offset_bottom = 100.0
 grow_horizontal = 0
 
-[node name="Controls" type="Control" parent="UI"]
+[node name="Controls" type="Control" parent="UI" unique_id=1903388850]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
