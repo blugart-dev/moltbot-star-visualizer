@@ -99,9 +99,11 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
 
 ### Fetching Star Data
 
+Uses GitHub GraphQL API (bypasses REST API's 40k star limit). Requires a token:
+
 ```bash
 cd scripts/tools
-python fetch_star_history.py
+GITHUB_TOKEN=$(gh auth token) python fetch_star_history.py
 # Output: data/star_history.json
 ```
 

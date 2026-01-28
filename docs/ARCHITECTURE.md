@@ -105,6 +105,12 @@ GitHub API → Python script → star_history.json → Godot loads → Visualiza
 
 `scripts/tools/fetch_star_history.py` - Run manually or via GitHub Action to update cached data.
 
+Uses GitHub's **GraphQL API** to bypass the REST API's 40,000 star pagination limit. Requires a GitHub token (no scopes needed for public repos).
+
+```bash
+GITHUB_TOKEN=$(gh auth token) python scripts/tools/fetch_star_history.py
+```
+
 ## Scene Structure
 
 ```
