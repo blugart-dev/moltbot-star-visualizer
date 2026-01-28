@@ -120,8 +120,14 @@ func _create_placeholder_mesh() -> Mesh:
 	var box := BoxMesh.new()
 	box.size = Vector3(0.5, 0.3, 1.0)  # Lobster-ish proportions
 
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color(0.8, 0.3, 0.2)  # Lobster red
-	box.material = material
+	# Use the instanced shader material for per-instance variation
+	var material: ShaderMaterial = load("res://assets/materials/lobster_material.tres")
+	if material:
+		box.material = material
+	else:
+		# Fallback if material not found
+		var fallback := StandardMaterial3D.new()
+		fallback.albedo_color = Color(0.8, 0.3, 0.2)  # Lobster red
+		box.material = fallback
 
 	return box
