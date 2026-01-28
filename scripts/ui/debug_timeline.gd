@@ -7,12 +7,20 @@ extends Control
 
 @onready var _slider: HSlider = $HSlider
 @onready var _label: Label = $Label
-@onready var _coordinator: Node = get_node_or_null("/root/Main/VisualizationCoordinator")
+
+var _coordinator: Node
 
 
 func _ready() -> void:
 	_setup_slider()
+	# Defer coordinator lookup to ensure scene tree is fully ready
+	call_deferred("_deferred_setup")
+
+
+func _deferred_setup() -> void:
+	_coordinator = get_node_or_null("/root/Main/VisualizationCoordinator")
 	_connect_signals()
+	_update_initial_state()
 
 
 func _setup_slider() -> void:
@@ -27,6 +35,18 @@ func _connect_signals() -> void:
 
 	if _coordinator:
 		_coordinator.date_updated.connect(_on_date_updated)
+
+
+func _update_initial_state() -> void:
+	if _coordinator:
+		var date: String = _coordinator.get_current_date()
+		var count: int = _coordinator.get_current_count()
+		if date != "":
+			_label.text = "%s | %d stars" % [date, count]
+		else:
+			_label.text = "No data loaded"
+	else:
+		_label.text = "Coordinator not found"
 
 
 func _on_slider_changed(value: float) -> void:
