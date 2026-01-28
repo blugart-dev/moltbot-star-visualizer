@@ -60,3 +60,11 @@ override.cfg
 
 # Claude session artifacts
 .claude-session
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.python-version
