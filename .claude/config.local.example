@@ -1,0 +1,25 @@
+# Claude Code Local Configuration
+# Copy this to config.local and customize for your environment
+# This file is gitignored - each developer sets their own paths
+
+# Godot executable path (required for /test command)
+# Examples:
+#   Linux:   GODOT=/home/user/godot/Godot_v4.6-stable_linux.x86_64
+#   macOS:   GODOT=/Applications/Godot.app/Contents/MacOS/Godot
+#   Windows: GODOT=C:/Godot/Godot_v4.6-stable_win64.exe
+GODOT=
+
+# Terminal emulator for /clone command (auto-detected if not set)
+# Examples:
+#   Linux:   TERMINAL=gnome-terminal
+#   macOS:   TERMINAL=osascript (uses Terminal.app)
+#   Windows: TERMINAL=wt (Windows Terminal) or cmd
+TERMINAL=
+
+# Editor for opening files (optional)
+# Examples: code, cursor, nvim, vim
+EDITOR=code
+
+# Hook settings
+# Run GUT tests before every commit (slower but safer)
+# RUN_TESTS_ON_COMMIT=true

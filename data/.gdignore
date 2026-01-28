@@ -1,0 +1,2 @@
+# This file tells Godot to not import files in this directory as resources.
+# We load star_history.json manually via FileAccess.

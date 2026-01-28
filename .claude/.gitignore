@@ -1,0 +1,5 @@
+# Local configuration (machine-specific)
+config.local
+
+# Session notes (gitignored to allow free-form notes)
+NOTES.md

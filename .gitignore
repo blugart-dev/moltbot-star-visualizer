@@ -1,0 +1,62 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Export
+/android/
+/build/
+/export/
+*.apk
+*.aab
+*.ipa
+
+# Export presets can contain signing keys
+export_presets.cfg
+
+# Environment and secrets
+*.env
+*.env.*
+.env.local
+secrets/
+credentials/
+
+# Local configuration
+*.local
+!.claude/config.local.example
+
+# Logs and debugging
+*.log
+logs/
+crash_reports/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE specific
+.idea/
+*.swp
+*.swo
+*~
+.vscode/settings.json
+.vscode/launch.json
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+
+# Godot export files
+*.pck
+*.zip
+
+# Editor state (personal preferences)
+override.cfg
+
+# Claude session artifacts
+.claude-session
