@@ -1,0 +1,81 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxq5j2m8k6lpv"]
+
+[ext_resource type="Script" path="res://scripts/core/orbit_camera.gd" id="1_orbit"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dark"]
+sky_top_color = Color(0.02, 0.02, 0.05, 1)
+sky_horizon_color = Color(0.05, 0.05, 0.1, 1)
+ground_bottom_color = Color(0.01, 0.01, 0.02, 1)
+ground_horizon_color = Color(0.05, 0.05, 0.1, 1)
+
+[sub_resource type="Sky" id="Sky_dark"]
+sky_material = SubResource("ProceduralSkyMaterial_dark")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_dark")
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.15, 0.2, 1)
+ambient_light_energy = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_placeholder"]
+albedo_color = Color(0.8, 0.3, 0.2, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_placeholder"]
+material = SubResource("StandardMaterial3D_placeholder")
+size = Vector3(2, 2, 2)
+
+[node name="Main" type="Node"]
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="LobsterManager" type="Node3D" parent="World"]
+
+[node name="PlaceholderCube" type="MeshInstance3D" parent="World/LobsterManager"]
+mesh = SubResource("BoxMesh_placeholder")
+
+[node name="Environment" type="WorldEnvironment" parent="World"]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 0, 10, 0)
+light_color = Color(0.9, 0.9, 1, 1)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="World"]
+script = ExtResource("1_orbit")
+
+[node name="TimelineController" type="Node" parent="."]
+
+[node name="DataProvider" type="Node" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TimelineBar" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StatsDisplay" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_bottom = 100.0
+grow_horizontal = 0
+
+[node name="Controls" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_right = 200.0
+grow_vertical = 0
