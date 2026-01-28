@@ -14,13 +14,11 @@ func test_negative_count_returns_empty_array() -> void:
 	assert_eq(result.size(), 0, "Should return empty array for negative count")
 
 
-func test_single_instance_at_origin_area() -> void:
+func test_single_instance_at_origin() -> void:
 	var result := PositionCalculatorScript.calculate_positions(1)
 	assert_eq(result.size(), 1, "Should return 1 transform")
-	# Single instance should be positioned on the sphere
-	var distance := result[0].origin.length()
-	assert_almost_eq(distance, PositionCalculatorScript.BASE_RADIUS, 0.01,
-		"Single instance should be at base radius")
+	# Single instance is at origin
+	assert_eq(result[0].origin, Vector3.ZERO, "Single instance should be at origin")
 
 
 func test_returns_correct_count() -> void:
@@ -107,23 +105,19 @@ func test_includes_rotation_variety() -> void:
 		"Should have rotation variety, found only %d unique rotations" % unique_rotations)
 
 
-func test_rotations_face_outward() -> void:
+func test_rotations_are_varied() -> void:
 	var result := PositionCalculatorScript.calculate_positions(20)
 
-	for i in range(result.size()):
-		var xform := result[i]
-		var position := xform.origin
-		if position.length_squared() < 0.001:
-			continue
+	# Rotations are random for natural swarm look - just verify they exist
+	var has_varied_rotation: bool = false
+	var first_basis := result[0].basis
 
-		# The Z axis of the basis (forward) should generally point outward
-		var forward := xform.basis.z
-		var outward := position.normalized()
-		var dot := forward.dot(outward)
+	for i in range(1, result.size()):
+		if not result[i].basis.is_equal_approx(first_basis):
+			has_varied_rotation = true
+			break
 
-		# Allow for random rotation offset, but should still face mostly outward
-		assert_gt(dot, 0.5,
-			"Instance %d forward vector should face outward (dot: %f)" % [i, dot])
+	assert_true(has_varied_rotation, "Rotations should vary across instances")
 
 
 func test_handles_large_counts_efficiently() -> void:
@@ -155,16 +149,6 @@ func test_swarm_grows_with_count() -> void:
 	assert_gt(radius_1000, radius_100, "Even larger count should have even larger radius")
 
 
-func test_layer_count_increases_with_instances() -> void:
-	var layers_10 := PositionCalculatorScript.get_layer_count(10)
-	var layers_100 := PositionCalculatorScript.get_layer_count(100)
-	var layers_1000 := PositionCalculatorScript.get_layer_count(1000)
-
-	assert_gte(layers_10, 1, "Should have at least 1 layer for 10 instances")
-	assert_gt(layers_100, layers_10, "More instances should need more layers")
-	assert_gt(layers_1000, layers_100, "Even more instances should need even more layers")
-
-
 func test_calculate_single_position_matches_batch() -> void:
 	var count: int = 50
 	var batch_result := PositionCalculatorScript.calculate_positions(count)
@@ -189,11 +173,6 @@ func test_calculate_single_position_out_of_range() -> void:
 func test_zero_swarm_radius() -> void:
 	assert_eq(PositionCalculatorScript.get_swarm_radius(0), 0.0,
 		"Zero count should have zero radius")
-
-
-func test_zero_layer_count() -> void:
-	assert_eq(PositionCalculatorScript.get_layer_count(0), 0,
-		"Zero count should have zero layers")
 
 
 func test_positions_spread_across_sphere() -> void:

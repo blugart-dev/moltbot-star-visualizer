@@ -7,7 +7,6 @@ extends Node
 @onready var _milestone_manager: Node = $MilestoneManager
 @onready var _audio_manager: Node = $AudioManager
 @onready var _camera: Camera3D = $World/Camera3D
-@onready var _particles: GPUParticles3D = $World/MilestoneParticles
 
 
 func _ready() -> void:
@@ -39,10 +38,6 @@ func _on_date_updated(_date: String, star_count: int) -> void:
 func _connect_milestone_effects() -> void:
 	if not _milestone_manager:
 		return
-
-	# Particles for milestones (subtle burst)
-	if _particles and _particles.has_method("trigger_burst"):
-		_milestone_manager.milestone_reached.connect(_particles.trigger_burst)
 
 	# Audio for milestones
 	if _audio_manager and _audio_manager.has_method("play_milestone_sound"):
