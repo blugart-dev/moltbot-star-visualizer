@@ -116,18 +116,5 @@ func _setup_multi_mesh() -> void:
 
 
 func _create_placeholder_mesh() -> Mesh:
-	# Simple box as placeholder until real lobster mesh exists
-	var box := BoxMesh.new()
-	box.size = Vector3(0.5, 0.3, 1.0)  # Lobster-ish proportions
-
-	# Use the instanced shader material for per-instance variation
-	var material: ShaderMaterial = load("res://assets/materials/lobster_material.tres")
-	if material:
-		box.material = material
-	else:
-		# Fallback if material not found
-		var fallback := StandardMaterial3D.new()
-		fallback.albedo_color = Color(0.8, 0.3, 0.2)  # Lobster red
-		box.material = fallback
-
-	return box
+	# Generate procedural lobster mesh
+	return LobsterMeshGenerator.create_lobster_mesh()

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/effects/milestone_particles.gd" id="1_particles"]
+[ext_resource type="ParticleProcessMaterial" path="res://assets/materials/milestone_particle.tres" id="2_material"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_particle"]
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 4
+
+[node name="MilestoneParticles" type="GPUParticles3D"]
+script = ExtResource("1_particles")
+amount = 100
+lifetime = 2.0
+one_shot = true
+explosiveness = 0.9
+process_material = ExtResource("2_material")
+draw_pass_1 = SubResource("SphereMesh_particle")

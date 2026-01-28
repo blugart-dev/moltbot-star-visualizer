@@ -4,6 +4,15 @@ extends Control
 ## Provides play/pause button, speed selector dropdown, timeline slider,
 ## and date/count display. Connects to TimelineController for state management.
 
+## Background color for the timeline bar.
+const BACKGROUND_COLOR := Color(0.08, 0.08, 0.12, 0.85)
+
+## Accent color for highlighted elements (lobster red).
+const ACCENT_COLOR := Color(0.85, 0.25, 0.15)
+
+## Text color for labels.
+const TEXT_COLOR := Color(0.92, 0.92, 0.95)
+
 @onready var _play_button: Button = $HBoxContainer/PlayButton
 @onready var _speed_selector: OptionButton = $HBoxContainer/SpeedSelector
 @onready var _slider: HSlider = $HBoxContainer/HSlider
@@ -16,6 +25,7 @@ var _is_scrubbing: bool = false
 
 
 func _ready() -> void:
+	_apply_styling()
 	_setup_slider()
 	call_deferred("_deferred_setup")
 
@@ -114,6 +124,62 @@ func _on_date_updated(date: String, star_count: int) -> void:
 
 func _update_play_button(is_playing: bool) -> void:
 	_play_button.text = "||" if is_playing else ">"
+
+
+func _apply_styling() -> void:
+	# Create semi-transparent rounded background
+	var bg_style := StyleBoxFlat.new()
+	bg_style.bg_color = BACKGROUND_COLOR
+	bg_style.corner_radius_top_left = 12
+	bg_style.corner_radius_top_right = 12
+	bg_style.corner_radius_bottom_left = 0
+	bg_style.corner_radius_bottom_right = 0
+	bg_style.content_margin_left = 16
+	bg_style.content_margin_right = 16
+	bg_style.content_margin_top = 12
+	bg_style.content_margin_bottom = 12
+	add_theme_stylebox_override("panel", bg_style)
+
+	# Style labels
+	_date_label.add_theme_color_override("font_color", TEXT_COLOR)
+	_count_label.add_theme_color_override("font_color", ACCENT_COLOR)
+
+	# Make count label bold/larger
+	var count_font_size := 18
+	_count_label.add_theme_font_size_override("font_size", count_font_size)
+
+	# Style play button
+	_style_play_button()
+
+	# Style speed selector
+	_style_speed_selector()
+
+
+func _style_play_button() -> void:
+	var normal_style := StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.15, 0.15, 0.2, 0.8)
+	normal_style.corner_radius_top_left = 6
+	normal_style.corner_radius_top_right = 6
+	normal_style.corner_radius_bottom_left = 6
+	normal_style.corner_radius_bottom_right = 6
+
+	var hover_style := normal_style.duplicate()
+	hover_style.bg_color = Color(0.2, 0.2, 0.28, 0.9)
+
+	var pressed_style := normal_style.duplicate()
+	pressed_style.bg_color = ACCENT_COLOR.darkened(0.2)
+
+	_play_button.add_theme_stylebox_override("normal", normal_style)
+	_play_button.add_theme_stylebox_override("hover", hover_style)
+	_play_button.add_theme_stylebox_override("pressed", pressed_style)
+	_play_button.add_theme_color_override("font_color", TEXT_COLOR)
+	_play_button.add_theme_color_override("font_hover_color", TEXT_COLOR)
+	_play_button.add_theme_color_override("font_pressed_color", TEXT_COLOR)
+
+
+func _style_speed_selector() -> void:
+	_speed_selector.add_theme_color_override("font_color", TEXT_COLOR)
+	_speed_selector.add_theme_color_override("font_hover_color", TEXT_COLOR)
 
 
 func _update_date_display(date: String) -> void:
