@@ -66,7 +66,7 @@ def fetch_stargazers_graphql(owner: str, name: str, token: str) -> list[str]:
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
-        "User-Agent": "moltbot-star-tracker",
+        "User-Agent": "moltbot-star-visualizer",
     }
 
     print(f"Fetching stargazers for {owner}/{name} using GraphQL API...")

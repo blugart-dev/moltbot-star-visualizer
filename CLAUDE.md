@@ -1,4 +1,4 @@
-# Moltbot Star Tracker - Claude Code Instructions
+# Moltbot Star Visualizer - Claude Code Instructions
 
 ## Project Overview
 
@@ -181,7 +181,7 @@ Use `/clone` for parallel Claude sessions:
 - Single file or non-overlapping changes
 - Clear acceptance criteria
 
-Clones live in `../.moltbot-star-tracker-clones/`.
+Clones live in `../.moltbot-star-visualizer-clones/`.
 
 ### Sequential Development
 
