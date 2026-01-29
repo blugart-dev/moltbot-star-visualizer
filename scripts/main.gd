@@ -1,11 +1,9 @@
 extends Node
 ## Main scene coordinator for signal connections.
 ##
-## Wires up cross-system signals for auto-zoom, milestone effects, and audio.
+## Wires up cross-system signals for auto-zoom.
 
 @onready var _coordinator: Node = $VisualizationCoordinator
-@onready var _milestone_manager: Node = $MilestoneManager
-@onready var _audio_manager: Node = $AudioManager
 @onready var _camera: Camera3D = $World/Camera3D
 
 
@@ -15,7 +13,6 @@ func _ready() -> void:
 
 func _connect_signals() -> void:
 	_connect_auto_zoom()
-	_connect_milestone_effects()
 
 
 func _connect_auto_zoom() -> void:
@@ -33,12 +30,3 @@ func _on_date_updated(_date: String, star_count: int) -> void:
 	# Calculate swarm radius and update camera
 	var radius := PositionCalculator.get_swarm_radius(star_count)
 	_camera.update_for_swarm_radius(radius)
-
-
-func _connect_milestone_effects() -> void:
-	if not _milestone_manager:
-		return
-
-	# Audio for milestones
-	if _audio_manager and _audio_manager.has_method("play_milestone_sound"):
-		_milestone_manager.milestone_reached.connect(_audio_manager.play_milestone_sound)

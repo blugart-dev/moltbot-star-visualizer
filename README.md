@@ -1,23 +1,37 @@
 # Moltbot Star Tracker
 
-A visual celebration of [moltbot](https://github.com/moltbot/moltbot)'s GitHub star history, built with Godot 4.6.
+A visual celebration of [moltbot](https://github.com/moltbot/moltbot)'s GitHub star history - watch 80,000+ 3D lobsters swarm through time.
 
-Watch the growth of moltbot's stars over time, visualized as 3D lobsters swarming the screen.
+![Screenshot](assets/screenshot.png)
+<!-- Add a screenshot or GIF of the visualization here -->
 
-## Features
+## What is this?
 
-- Visual timeline of GitHub stars from moltbot's first star to present
-- 3D lobster models representing each star (matching moltbot's molting theme)
-- Web playable + buildable from source
-- Optimized for rendering tens of thousands of objects
+A real-time visualization that animates moltbot's journey from its first GitHub star to over 80,000. Each star becomes a 3D lobster (matching moltbot's molting/lobster theme), forming an ever-growing swarm that you can orbit around and explore.
 
 ## Try It
 
-**Web**: [Coming soon]
+Clone and run in Godot - see [Building](#building-from-source) below.
 
-**Build from source**: See [Building](#building) below
+## Features
 
-## Building
+- **80,000+ 3D lobsters** - Each star represented as a procedural lobster model
+- **Timeline playback** - Watch the swarm grow from day one, with adjustable speed (0.5x - 10x)
+- **Interactive camera** - Orbit and zoom to explore the swarm from any angle
+- **Touch support** - Pinch-zoom and drag-to-orbit on touch devices
+- **Auto-zoom** - Camera automatically adjusts to keep the growing swarm in view
+
+## Controls
+
+| Action | Desktop | Touch |
+|--------|---------|-------|
+| Orbit camera | Click + drag | One-finger drag |
+| Zoom | Scroll wheel | Pinch |
+| Play/Pause | Click button | Tap button |
+| Scrub timeline | Drag slider | Drag slider |
+| Change speed | Click dropdown | Tap dropdown |
+
+## Building from Source
 
 ### Requirements
 
@@ -31,17 +45,13 @@ git clone https://github.com/blugart-dev/moltbot-star-tracker.git
 cd moltbot-star-tracker
 ```
 
-Open the project in Godot and run.
+Open the project in Godot and press F5 to run.
 
-## Development
+## Technical Highlights
 
-This project uses Claude Code workflows. See [CLAUDE.md](CLAUDE.md) for development conventions.
-
-### Quick Start
-
-1. Copy `.claude/config.local.example` to `.claude/config.local`
-2. Set your Godot path in `config.local`
-3. Run `/sync` to get started
+- **MultiMesh rendering** - GPU-instanced drawing handles 80K+ objects at 60fps
+- **Procedural models** - Lobsters generated at runtime (~340 triangles each)
+- **Fibonacci sphere** - Stars distributed evenly using golden angle algorithm
 
 ## License
 

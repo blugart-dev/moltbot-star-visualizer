@@ -27,15 +27,6 @@ res://
 └── tests/            # GUT test files
 ```
 
-## Key Documentation
-
-| Document | Purpose |
-|----------|---------|
-| `docs/ARCHITECTURE.md` | System architecture and code patterns |
-| `docs/DESIGN_DOCUMENT.md` | Design goals, milestones, scope |
-
----
-
 ## Collaboration Model
 
 **Claude writes**: Code (.gd), scenes (.tscn), resources (.tres), documentation
@@ -81,8 +72,6 @@ Use `##` doc comments for class descriptions, signals, exports, and public funct
 | `LobsterManager` | MultiMesh setup, instance transforms, shader data |
 | `TimelineController` | Playback state, date tracking, signals |
 | `DataProvider` | Load JSON, provide star counts by date |
-
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for full details.
 
 ---
 
