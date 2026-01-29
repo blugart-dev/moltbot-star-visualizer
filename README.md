@@ -1,4 +1,4 @@
-# Moltbot Star Tracker
+# Moltbot Star Visualizer
 
 A visual celebration of [moltbot](https://github.com/moltbot/moltbot)'s GitHub star history - watch 80,000+ 3D lobsters swarm through time.
 
@@ -41,8 +41,8 @@ Clone and run in Godot - see [Building](#building-from-source) below.
 ### Steps
 
 ```bash
-git clone https://github.com/blugart-dev/moltbot-star-tracker.git
-cd moltbot-star-tracker
+git clone https://github.com/blugart-dev/moltbot-star-visualizer.git
+cd moltbot-star-visualizer
 ```
 
 Open the project in Godot and press F5 to run.
